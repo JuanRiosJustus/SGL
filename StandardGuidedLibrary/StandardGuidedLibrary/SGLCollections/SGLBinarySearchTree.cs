@@ -12,14 +12,14 @@ namespace StandardGuidedLibrary.SGLCollections
         private SGLNode<T> Root;
         private int Size = 0;
 
-        public SGLBinarySearchTree() { }
+        public SGLBinarySearchTree() { Root = null; }
         public SGLBinarySearchTree(T data, int identifier)
         {
             Root = new SGLNode<T>(data, identifier);
             Size++;
         }
         /// <summary>
-        /// Add an object to the tree using an id.
+        /// Add an object to the tree.
         /// </summary>
         /// <param name="data"></param>
         /// <param name="Identifier"></param>
@@ -36,86 +36,77 @@ namespace StandardGuidedLibrary.SGLCollections
             }
             Size++;
         }
-        /// <summary>
-        /// Traverse the tree until the next available spot, maintaining the search property using an id.
-        /// </summary>
-        /// <param name="parent"></param>
-        /// <param name="node"></param>
-        private void TraverseAndAdd(SGLNode<T> parent, SGLNode<T> node)
+        private void TraverseAndAdd(SGLNode<T> parent, SGLNode<T> newNode)
         {
-            if (parent.Identifier() < node.Identifier())
+            if (parent.Identifier() < newNode.Identifier())
             {
                 if (parent.GetRight() == null)
                 {
-                    parent.SetRight(node);
+                    parent.SetRight(newNode);
                 }
                 else
                 {
-                    TraverseAndAdd(parent.GetRight(), node);
+                    TraverseAndAdd(parent.GetRight(), newNode);
                 }
             }
             else
             {
-                // The Root identifier is larger than the new node.
                 if (parent.GetLeft() == null)
                 {
-                    Root.SetLeft(node);
+                    parent.SetLeft(newNode);
                 }
                 else
                 {
-                    TraverseAndAdd(parent.GetLeft(), node);
+                    TraverseAndAdd(parent.GetLeft(), newNode);
                 }
             }
         }
-        public int Length() { return Size; }
         /// <summary>
-        /// Gets the root of the tree.
+        /// Returns a string representation of the InOrder traversal of the current collection.
         /// </summary>
-        /// <returns></returns>
-        public SGLNode<T> GetRoot() { Console.WriteLine(Root.GetData() + ""); return Root; }
-        /// <summary>
-        /// Determines if the current tree has a root.
-        /// </summary>
-        /// <returns></returns>
-        public bool HasRoot() { return (Root == null ? false : true); }
-        /// <summary>
-        /// Writes the post order traversal of tree given a Node, to console.
-        /// </summary>
-        /// <param name="root"></param>
-        public void PreOrderTraversal(SGLNode<T> root)
+        public string InOrderTraversal()
         {
-            if (root != null)
+            return "[ " + InOrderTraversal(Root, "") + "]";
+        }
+        private string InOrderTraversal(SGLNode<T> node, string data)
+        {
+            if (node != null)
             {
-                Console.Write(root.GetData() + " ");
-                PreOrderTraversal(root.GetLeft());
-                PreOrderTraversal(root.GetRight());
+                data = InOrderTraversal(node.GetLeft(), data) + node.Identifier().ToString() + " " + InOrderTraversal(node.GetRight(), data);
             }
+            return data;
         }
         /// <summary>
-        /// Writes the in order traversal of tree given a Node. to the console.
+        /// Returns a string representation of the PreOrder traversal of the current collection.
         /// </summary>
-        /// <param name="root"></param>
-        public void InOrderTraversal(SGLNode<T> root)
+        public string PreOrderTraversal()
         {
-            if (root != null)
+            return "[ " + PreOrderTraversal(Root, "") + "]";
+        }
+        private string PreOrderTraversal(SGLNode<T> node, string data)
+        {
+            if (node != null)
             {
-                InOrderTraversal(root.GetLeft());
-                Console.Write(root.GetData() + " ");
-                InOrderTraversal(root.GetRight());
+                data = node.Identifier().ToString() + " " + PreOrderTraversal(node.GetLeft(), data) + PreOrderTraversal(node.GetRight(), data);
             }
+            return data;
+            
         }
         /// <summary>
-        /// Writes the post order traversal of a tree given a Node to console.
+        /// Returns a string representation of the PostOrder traversal of the current collection.
         /// </summary>
-        /// <param name="root"></param>
-        public void PostOrderTraversal(SGLNode<T> root)
+        public string PostOrderTraversal()
         {
-            if (root != null)
+            return "[ " + PostOrderTraversal(Root, "") + "]";
+            
+        }
+        public string PostOrderTraversal(SGLNode<T> node, string data)
+        {
+            if (node != null)
             {
-                PostOrderTraversal(root.GetLeft());
-                PostOrderTraversal(root.GetRight());
-                Console.Write(root.GetData() + " ");
+                data = PostOrderTraversal(node.GetLeft(), data) + PostOrderTraversal(node.GetRight(), data) + node.Identifier().ToString() + " ";
             }
+            return data;
         }
     }
 }

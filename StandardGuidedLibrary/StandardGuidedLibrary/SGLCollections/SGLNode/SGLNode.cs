@@ -8,67 +8,139 @@ namespace StandardGuidedLibrary.SGLCollections.SGLNode
 {
     class SGLNode<T>
     {
+        private int ID;
         private T Data;
         private SGLNode<T> Next;
         private SGLNode<T> Previous;
-        private int Identification;
+        public SGLArrayList<SGLNode<T>> AdjacencyList;
 
+        /// <summary>
+        /// Default constructor for SGLnode.
+        /// </summary>
+        public SGLNode()
+        {
+            this.ID = 0;
+            this.Data = default(T);
+            this.AdjacencyList = null;
+        }
+        /// <summary>
+        /// Constructor for SGLNode taking in data.
+        /// </summary>
+        /// <param name="data"></param>
         public SGLNode(T data)
         {
-            Data = data;
-        }
-        public SGLNode(T data, int identification)
-        {
-            Data = data;
-            Identification = identification;
+            this.ID = 0;
+            this.Data = data;
+            this.AdjacencyList = new SGLArrayList<SGLNode<T>>();
         }
         /// <summary>
-        /// Retrieve the data located within the current Node.
+        /// Constructor for SGLNode taking in data and identification.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        public SGLNode(T data, int id)
+        {
+            ID = id;
+            Data = data;
+            AdjacencyList = new SGLArrayList<SGLNode<T>>();
+        }
+        /// <summary>
+        /// Constructor for SGLNode taking in data, identification, and associated SGLNodes
+        /// where associated SGLNodes are synonymous with adjacent SGLNodes
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <param name="associates"></param>
+        public SGLNode(T data, int id, SGLArrayList<SGLNode<T>> associates)
+        {
+            ID = id;
+            Data = data;
+            AdjacencyList = associates;
+        }
+
+        /// <summary>
+        /// Returns an SGLNode at the given index associated with the current SGLNode.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public SGLNode<T> GetAdjacentNode(int index) { return AdjacencyList.Get(index); }
+        /// <summary>
+        /// Adds an SGLNode to the list of associated SGLNodes.
+        /// </summary>
+        /// <param name="node"></param>
+        public void AddAdjacentNode(SGLNode<T> node) { AdjacencyList.Add(node); }
+        /// <summary>
+        /// Deletes an SGLNode at the given index associated with the current SGLNode.
+        /// </summary>
+        /// <param name="index"></param>
+        public void DeleteAdjacentNode(SGLNode<T> node) { AdjacencyList.Delete(node); }
+
+        /// <summary>
+        /// Return the integer representing the Identity of the Node.
+        /// </summary>
+        public int Id() { return ID; }
+        /// <summary>
+        /// Retrieves the core information of the current SGLNode.
         /// </summary>
         public T GetData() { return Data; }
+
         /// <summary>
-        /// Get the left child of the current Node.
+        /// Gets the left child of the current SGLNode.
         /// </summary>
         public SGLNode<T> GetLeft() { return Previous; }
         /// <summary>
-        /// Set the left child of the current Node.
+        /// Sets the left child of the current SGLNode.
         /// </summary>
         /// <param name="node"></param>
         public void SetLeft(SGLNode<T> node) { Previous = node; }
         /// <summary>
-        /// Get the right child of the current Node.
+        /// Gets the right child of the current SGLNode.
         /// </summary>
         public SGLNode<T> GetRight() { return Next; }
         /// <summary>
-        /// Set the right child fo the current Node.
+        /// Sets the right child fo the current SGLNode.
         /// </summary>
         /// <param name="node"></param>
         public void SetRight(SGLNode<T> node) { Next = node; }
+
         /// <summary>
-        /// Retrieve the next Node relative to the current Node.
+        /// Retrieves the next SGLNode relative to the current SGLNode.
         /// </summary>
         public SGLNode<T> GetNext() { return Next; }
         /// <summary>
-        /// Set the value of the next StackNode relative to the current Node.
+        /// Sets the next SGLNode relative to the current SGLNode.
         /// </summary>
         /// <param name="data"></param>
         public void SetNext(SGLNode<T> data) { Next = data; }
         /// <summary>
-        /// Retrieve the previous Node relative to the current Node.
+        /// Retrieves the previous SGLNode relative to the current SGLNode.
         /// </summary>
         public SGLNode<T> GetPrevious() { return Previous; }
         /// <summary>
-        /// Set the value of the previous StackNode relative to the current Node.
+        /// Set the value of the previous SGLNode relative to the current SGLNode.
         /// </summary>
         /// <param name="data"></param>
         public void SetPrevious(SGLNode<T> data) { Previous = data; }
+
         /// <summary>
-        /// Return the integer representing the Identity of the Node.
+        /// Returns a string representation of the associated SGLNodes
+        /// with respect to the longevity of their relationship to 
+        /// the current SGLNode.
         /// </summary>
-        public int Identifier() { return Identification; }
+        /// <returns></returns>
+        public string AssociatesToString() { return AdjacencyList.ToString(); }
+        /// <summary>
+        /// Returns a string representation of the curent node.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()  { return Data.ToString(); }
+        /// <summary>
+        /// Return the hash code for this SGLNode.
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
-            return string.Format("{0}-{1}", Data, Identification).GetHashCode();
+            return string.Format("{0}-{1}", Data, ID).GetHashCode();
         }
         
     }

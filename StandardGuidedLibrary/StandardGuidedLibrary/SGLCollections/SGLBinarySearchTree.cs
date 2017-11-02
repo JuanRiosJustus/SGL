@@ -9,8 +9,8 @@ namespace StandardGuidedLibrary.SGLCollections
 {
     class SGLBinarySearchTree<T>
     {
-        private SGLNode<T> Root;
         private int Size = 0;
+        private SGLNode<T> Root;
 
         public SGLBinarySearchTree() { Root = null; }
         public SGLBinarySearchTree(T data, int identifier)
@@ -38,7 +38,7 @@ namespace StandardGuidedLibrary.SGLCollections
         }
         private void TraverseAndAdd(SGLNode<T> parent, SGLNode<T> newNode)
         {
-            if (parent.Identifier() < newNode.Identifier())
+            if (parent.Id() < newNode.Id())
             {
                 if (parent.GetRight() == null)
                 {
@@ -68,13 +68,13 @@ namespace StandardGuidedLibrary.SGLCollections
         {
             return "[ " + InOrderTraversal(Root, "") + "]";
         }
-        private string InOrderTraversal(SGLNode<T> node, string data)
+        private string InOrderTraversal(SGLNode<T> node, string arg)
         {
             if (node != null)
             {
-                data = InOrderTraversal(node.GetLeft(), data) + node.Identifier().ToString() + " " + InOrderTraversal(node.GetRight(), data);
+                arg = InOrderTraversal(node.GetLeft(), arg) + node.Id().ToString() + " " + InOrderTraversal(node.GetRight(), arg);
             }
-            return data;
+            return arg;
         }
         /// <summary>
         /// Returns a string representation of the PreOrder traversal of the current collection.
@@ -83,13 +83,13 @@ namespace StandardGuidedLibrary.SGLCollections
         {
             return "[ " + PreOrderTraversal(Root, "") + "]";
         }
-        private string PreOrderTraversal(SGLNode<T> node, string data)
+        private string PreOrderTraversal(SGLNode<T> node, string arg)
         {
             if (node != null)
             {
-                data = node.Identifier().ToString() + " " + PreOrderTraversal(node.GetLeft(), data) + PreOrderTraversal(node.GetRight(), data);
+                arg = node.Id().ToString() + " " + PreOrderTraversal(node.GetLeft(), arg) + PreOrderTraversal(node.GetRight(), arg);
             }
-            return data;
+            return arg;
             
         }
         /// <summary>
@@ -100,13 +100,13 @@ namespace StandardGuidedLibrary.SGLCollections
             return "[ " + PostOrderTraversal(Root, "") + "]";
             
         }
-        public string PostOrderTraversal(SGLNode<T> node, string data)
+        public string PostOrderTraversal(SGLNode<T> node, string arg)
         {
             if (node != null)
             {
-                data = PostOrderTraversal(node.GetLeft(), data) + PostOrderTraversal(node.GetRight(), data) + node.Identifier().ToString() + " ";
+                arg = PostOrderTraversal(node.GetLeft(), arg) + PostOrderTraversal(node.GetRight(), arg) + node.Id().ToString() + " ";
             }
-            return data;
+            return arg;
         }
     }
 }

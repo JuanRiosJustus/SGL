@@ -24,15 +24,17 @@ namespace StandardGuidedLibrary.SGLCollections
         /// <param name="data"></param>
         public void Enqueue(T data)
         {
-            SGLNode<T> Node = new SGLNode<T>(data);
+            SGLNode<T> node = new SGLNode<T>(data);
             if (Front == null)
             {
-                Front = Node;
+                Front = node;
                 Front.SetNext(Back);
-                Back = Front;
-            } else {
-                Back.SetNext(Node);
-                Back = Node;
+                Back = node;
+            }
+            else
+            {
+                Back.SetNext(node);
+                Back = node;
             }
             Size = Size + 1;
         }
@@ -44,7 +46,9 @@ namespace StandardGuidedLibrary.SGLCollections
             if (Front == null)
             {
                 return default(T);
-            } else {
+            }
+            else
+            {
                 SGLNode<T> Temporary = Front;
                 Front = Front.GetNext();
                 Size = Size - 1;
@@ -56,8 +60,10 @@ namespace StandardGuidedLibrary.SGLCollections
             if (Front == null)
             {
                 return default(T);
-            } else {
-                return Front.GetData();
+            }
+            else
+            {
+                return Back.GetData();
             }
         }
         /// <summary>
@@ -73,6 +79,25 @@ namespace StandardGuidedLibrary.SGLCollections
         public int Length()
         {
             return Size;
+        }
+        public override string ToString()
+        {
+            return "[" + StringForm("") + "]";
+        }
+        private string StringForm(string data)
+        {
+            SGLArrayList<SGLNode<T>> nodes = new SGLArrayList<SGLNode<T>>();
+            SGLNode<T> temp = Front;
+            int index = 0;
+            while (temp != null)
+            {
+                nodes.Add(temp);
+                temp = temp.GetNext();
+                data = data + nodes.Get(index).ToString() + (temp == null ? "" : ", ");
+                index++;
+            }
+            Front = nodes.Get(0);
+            return data;
         }
     }
 }

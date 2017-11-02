@@ -12,41 +12,69 @@ namespace StandardGuidedLibrary.SGLCollections
         private T[] Array;
         private int Index;
 
+        /// <summary>
+        /// Constructor for the SGLArrayList.
+        /// </summary>
         public SGLArrayList()
         {
             this.Array = new T[10];
             this.Index = 0;
         }
         /// <summary>
-        /// Adds an element to the ArrayList.
+        /// Adds an element to the SGLArrayList.
         /// </summary>
         /// <param name="data"></param>
         public void Add(T data)
         {
             if (this.Array.Length - 1 == this.Index)
             {
-                T[] NewArray = new T[this.Array.Length * 2];
+                T[] NewArray = new T[(this.Array.Length * 3) / 2 + 1];
                 for (int index = 0; index < this.Array.Length; index++)
                 {
                     NewArray[index] = Array[index];
                 }
                 this.Array = NewArray;
             }
-
             this.Array[Index] = data;
             this.Index = this.Index + 1;
         }
         /// <summary>
-        /// Replaces the element at the index with the given element.
+        /// Replaces the element at the given index, with the given element.
         /// </summary>
         /// <param name="index"></param>
         /// <param name="data"></param>
-        public void Replace(int index, T data)
+        public void Set(int index, T data)
         {
             this.Array[index] = data;
         }
         /// <summary>
-        /// Method used to delete a particular index from an array.
+        /// Gets a particular element from the ArrayList given an index.
+        /// </summary>
+        /// <param name="index"></param>
+        public T Get(int index)
+        {
+            return this.Array[index];
+        }
+        /// <summary>
+        /// Returns the given element from the SGLArrayList
+        /// if and only if the array contains the same referenced element.
+        /// (this should be used with caution in comparison to using an index to get an element.)
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public T Get(T data)
+        {
+            for (int index = 0; index < this.Index; index++)
+            {
+                if (Object.ReferenceEquals(Array[index], data))
+                {
+                    return Array[index];
+                }
+            }
+            return default(T);
+        }
+        /// <summary>
+        /// Deletes a particular element from the SGLArrayList given an index.
         /// </summary>
         /// <param name="index"></param>
         public void Delete(int index)
@@ -65,7 +93,28 @@ namespace StandardGuidedLibrary.SGLCollections
             this.Array = NewArray;
         }
         /// <summary>
-        /// Retrieves the current size of the ArrayList.
+        /// If and only if the given element has the same
+        /// reference as an element in the SGLArrayList, the object with the same
+        /// reference will be deleted.
+        /// </summary>
+        /// <param name="data"></param>
+        public void Delete(T data)
+        {
+            T[] NewArray = new T[this.Array.Length - 1];
+
+            for (int otherIndex = 0, secondOtherIndex = 0; otherIndex < this.Array.Length; otherIndex++)
+            {
+                if (!Object.ReferenceEquals(Array[otherIndex], data))
+                {
+                    NewArray[secondOtherIndex] = this.Array[otherIndex];
+                    secondOtherIndex++;
+                }
+            }
+            this.Index = this.Index - 1;
+            this.Array = NewArray;
+        }
+        /// <summary>
+        /// Retrieves the current size of the SGLArrayList.
         /// </summary>
         /// <returns></returns>
         public int Length()
@@ -73,22 +122,30 @@ namespace StandardGuidedLibrary.SGLCollections
             return this.Index;
         }
         /// <summary>
-        /// Gets a particular element from the ArrayList given an index.
+        /// Returns true, if and only if an object within this collection holds ths same
+        /// HashCode as the given object.
         /// </summary>
-        /// <param name="index"></param>
-        public T Get(int index)
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public bool Contains(T data)
         {
-            return this.Array[index];
+            for (int index = 0; index < this.Index; index++)
+            {
+                if (Object.ReferenceEquals(Array[index], data))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
-
         /// <summary>
-        /// Given an index and an element add an element to the particular
-        /// index and shifting all other elements to the right one
-        /// (increase every element's original index by one) 
+        /// Given an index, place the given element at the index.
+        /// All elements including the element that had been replaced
+        /// will have their index increases by one.
         /// </summary>
         /// <param name="index"></param>
         /// <param name="element"></param>
-        public void Insert(int index, T element)
+        public void Insert(int index, T data)
         {
             int Flag = 0;
             T[] Temp = new T[this.Array.Length + 1];
@@ -101,7 +158,7 @@ namespace StandardGuidedLibrary.SGLCollections
                 if (position == index - 1)
                 {
                     Flag = position + 2;
-                    Temp[position + 1] = element;
+                    Temp[position + 1] = data;
                 }
             }
             for (int position = Flag; position < Temp.Length - 1; position++)
@@ -114,6 +171,39 @@ namespace StandardGuidedLibrary.SGLCollections
             }
             this.Index = this.Index + 1;
             this.Array = Temp;
+        }
+        /// <summary>
+        /// Returns true if and only if the SGLArrayList length is of size zero.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEmpty()
+        {
+            if (Array.Length == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// Returns a string representation of the collection.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "[" + StringForm() + "]";
+        }
+
+        private string StringForm()
+        {
+            string arg = "";
+            for (int index = 0; index < this.Index; index++)
+            {
+                arg = arg + (Array[index].ToString().Length < 1 ? "" : (arg.Length < 1 ? "" : ", ")) + Array[index].ToString();
+            }
+            return arg;
         }
     }
 }

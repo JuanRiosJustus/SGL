@@ -77,5 +77,43 @@ namespace StandardGuidedLibrary.SGLCollections
         {
             return Size;
         }
+        /// <summary>
+        /// Returns a string representation of the stack where
+        /// the first element is the first element si the bottom
+        /// of the stack.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "[" + StringForm("") + "]";
+        }
+        private string StringForm(string data)
+        {
+            SGLArrayList<SGLNode<T>> nodes = new SGLArrayList<SGLNode<T>>();
+            SGLNode<T> current = Reverse(Top);
+            nodes.Add(current);
+            while (current != null)
+            {
+                data = data + current.ToString() + (current.GetNext() == null ? "" : ", ");
+                current = current.GetNext();
+            }
+            Top = Reverse(nodes.Get(0));
+            return data;
+        }
+        private SGLNode<T> Reverse(SGLNode<T> node)
+        {
+            SGLNode<T> prev = null;
+            SGLNode<T> current = node;
+            SGLNode<T> next = null;
+            while (current != null)
+            {
+                next = current.GetNext();
+                current.SetNext(prev);
+                prev = current;
+                current = next;
+            }
+            node = prev;
+            return node;
+        }
     }
 }

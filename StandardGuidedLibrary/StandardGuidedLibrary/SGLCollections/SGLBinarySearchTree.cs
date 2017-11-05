@@ -1,5 +1,4 @@
-﻿using StandardGuidedLibrary.SGLCollections.SGLNode;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,39 +24,39 @@ namespace StandardGuidedLibrary.SGLCollections
         /// <param name="Identifier"></param>
         public void Add(T data, int Identifier)
         {
-            SGLNode<T> Node = new SGLNode<T>(data, Identifier);
+            SGLNode<T> SGLNode = new SGLNode<T>(data, Identifier);
             if (Root == null)
             {
-                Root = Node;
+                Root = SGLNode;
             }
             else
             {
-                TraverseAndAdd(Root, Node);
+                TraverseAndAdd(Root, SGLNode);
             }
             Size++;
         }
-        private void TraverseAndAdd(SGLNode<T> parent, SGLNode<T> newNode)
+        private void TraverseAndAdd(SGLNode<T> parent, SGLNode<T> newSGLNode)
         {
-            if (parent.Id() < newNode.Id())
+            if (parent.Id() < newSGLNode.Id())
             {
                 if (parent.GetRight() == null)
                 {
-                    parent.SetRight(newNode);
+                    parent.SetRight(newSGLNode);
                 }
                 else
                 {
-                    TraverseAndAdd(parent.GetRight(), newNode);
+                    TraverseAndAdd(parent.GetRight(), newSGLNode);
                 }
             }
             else
             {
                 if (parent.GetLeft() == null)
                 {
-                    parent.SetLeft(newNode);
+                    parent.SetLeft(newSGLNode);
                 }
                 else
                 {
-                    TraverseAndAdd(parent.GetLeft(), newNode);
+                    TraverseAndAdd(parent.GetLeft(), newSGLNode);
                 }
             }
         }
@@ -68,11 +67,11 @@ namespace StandardGuidedLibrary.SGLCollections
         {
             return "[ " + InOrderTraversal(Root, "") + "]";
         }
-        private string InOrderTraversal(SGLNode<T> node, string arg)
+        private string InOrderTraversal(SGLNode<T> SGLNode, string arg)
         {
-            if (node != null)
+            if (SGLNode != null)
             {
-                arg = InOrderTraversal(node.GetLeft(), arg) + node.Id().ToString() + " " + InOrderTraversal(node.GetRight(), arg);
+                arg = InOrderTraversal(SGLNode.GetLeft(), arg) + SGLNode.Id().ToString() + " " + InOrderTraversal(SGLNode.GetRight(), arg);
             }
             return arg;
         }
@@ -81,16 +80,16 @@ namespace StandardGuidedLibrary.SGLCollections
         /// </summary>
         public string PreOrderTraversal()
         {
-            return "[ " + PreOrderTraversal(Root, "") + "]";
+            return "[" + PreOrderTraversal(Root, "") + "]";
         }
-        private string PreOrderTraversal(SGLNode<T> node, string arg)
+        private string PreOrderTraversal(SGLNode<T> SGLNode, string arg)
         {
-            if (node != null)
+            if (SGLNode != null)
             {
-                arg = node.Id().ToString() + " " + PreOrderTraversal(node.GetLeft(), arg) + PreOrderTraversal(node.GetRight(), arg);
+                arg = SGLNode.Id().ToString() + " " + PreOrderTraversal(SGLNode.GetLeft(), arg) + PreOrderTraversal(SGLNode.GetRight(), arg);
             }
             return arg;
-            
+
         }
         /// <summary>
         /// Returns a string representation of the PostOrder traversal of the current collection.
@@ -98,13 +97,13 @@ namespace StandardGuidedLibrary.SGLCollections
         public string PostOrderTraversal()
         {
             return "[ " + PostOrderTraversal(Root, "") + "]";
-            
+
         }
-        public string PostOrderTraversal(SGLNode<T> node, string arg)
+        public string PostOrderTraversal(SGLNode<T> SGLNode, string arg)
         {
-            if (node != null)
+            if (SGLNode != null)
             {
-                arg = PostOrderTraversal(node.GetLeft(), arg) + PostOrderTraversal(node.GetRight(), arg) + node.Id().ToString() + " ";
+                arg = PostOrderTraversal(SGLNode.GetLeft(), arg) + PostOrderTraversal(SGLNode.GetRight(), arg) + SGLNode.Id().ToString() + " ";
             }
             return arg;
         }

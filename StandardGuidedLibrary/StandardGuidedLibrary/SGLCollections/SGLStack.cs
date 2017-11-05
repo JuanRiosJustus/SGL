@@ -1,5 +1,4 @@
-﻿using StandardGuidedLibrary.SGLCollections.SGLNode;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,14 +23,16 @@ namespace StandardGuidedLibrary.SGLCollections
         /// <param name="data"></param>
         public void Push(T data)
         {
-            SGLNode<T> Node = new SGLNode<T>(data);
+            SGLNode<T> SGLNode = new SGLNode<T>(data);
             if (Top == null)
             {
-                Top = Node;
-            } else {
-                Top.SetPrevious(Node);
-                Node.SetNext(Top);
-                Top = Node;
+                Top = SGLNode;
+            }
+            else
+            {
+                Top.SetPrevious(SGLNode);
+                SGLNode.SetNext(Top);
+                Top = SGLNode;
             }
             Size = Size + 1;
         }
@@ -43,7 +44,9 @@ namespace StandardGuidedLibrary.SGLCollections
             if (Top == null)
             {
                 return default(T);
-            }  else {
+            }
+            else
+            {
                 SGLNode<T> Temporary = Top;
                 Top = Top.GetNext();
                 Size = Size - 1;
@@ -58,7 +61,9 @@ namespace StandardGuidedLibrary.SGLCollections
             if (Top == null)
             {
                 return default(T);
-            }  else {
+            }
+            else
+            {
                 return Top.GetData();
             }
         }
@@ -89,21 +94,20 @@ namespace StandardGuidedLibrary.SGLCollections
         }
         private string StringForm(string data)
         {
-            SGLArrayList<SGLNode<T>> nodes = new SGLArrayList<SGLNode<T>>();
             SGLNode<T> current = Reverse(Top);
-            nodes.Add(current);
+            SGLNode<T> topHold = current;
             while (current != null)
             {
                 data = data + current.ToString() + (current.GetNext() == null ? "" : ", ");
                 current = current.GetNext();
             }
-            Top = Reverse(nodes.Get(0));
+            Top = Reverse(topHold);
             return data;
         }
-        private SGLNode<T> Reverse(SGLNode<T> node)
+        private SGLNode<T> Reverse(SGLNode<T> SGLNode)
         {
             SGLNode<T> prev = null;
-            SGLNode<T> current = node;
+            SGLNode<T> current = SGLNode;
             SGLNode<T> next = null;
             while (current != null)
             {
@@ -112,8 +116,8 @@ namespace StandardGuidedLibrary.SGLCollections
                 prev = current;
                 current = next;
             }
-            node = prev;
-            return node;
+            SGLNode = prev;
+            return SGLNode;
         }
     }
 }

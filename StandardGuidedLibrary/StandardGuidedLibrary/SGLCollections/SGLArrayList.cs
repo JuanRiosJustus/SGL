@@ -1,5 +1,4 @@
-﻿using StandardGuidedLibrary.SGLCollections.SGLNode;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -72,6 +71,24 @@ namespace StandardGuidedLibrary.SGLCollections
                 }
             }
             return default(T);
+        }
+        /// <summary>
+        /// Returns the index of the object if it is located within the 
+        /// the SGLArrayList. Will return -1 if the object was not found
+        /// within the list.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public int IndexOf(T data)
+        {
+            for (int index = 0; index < this.Index; index++)
+            {
+                if (Object.ReferenceEquals(Array[index], data))
+                {
+                    return index;
+                }
+            }
+            return -1;
         }
         /// <summary>
         /// Deletes a particular element from the SGLArrayList given an index.

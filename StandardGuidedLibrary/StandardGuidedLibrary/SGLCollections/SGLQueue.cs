@@ -1,5 +1,4 @@
-﻿using StandardGuidedLibrary.SGLCollections.SGLNode;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,17 +23,17 @@ namespace StandardGuidedLibrary.SGLCollections
         /// <param name="data"></param>
         public void Enqueue(T data)
         {
-            SGLNode<T> node = new SGLNode<T>(data);
+            SGLNode<T> SGLNode = new SGLNode<T>(data);
             if (Front == null)
             {
-                Front = node;
+                Front = SGLNode;
                 Front.SetNext(Back);
-                Back = node;
+                Back = SGLNode;
             }
             else
             {
-                Back.SetNext(node);
-                Back = node;
+                Back.SetNext(SGLNode);
+                Back = SGLNode;
             }
             Size = Size + 1;
         }
@@ -86,17 +85,17 @@ namespace StandardGuidedLibrary.SGLCollections
         }
         private string StringForm(string data)
         {
-            SGLArrayList<SGLNode<T>> nodes = new SGLArrayList<SGLNode<T>>();
+            SGLArrayList<SGLNode<T>> SGLNodes = new SGLArrayList<SGLNode<T>>();
             SGLNode<T> temp = Front;
             int index = 0;
             while (temp != null)
             {
-                nodes.Add(temp);
+                SGLNodes.Add(temp);
                 temp = temp.GetNext();
-                data = data + nodes.Get(index).ToString() + (temp == null ? "" : ", ");
+                data = data + SGLNodes.Get(index).ToString() + (temp == null ? "" : ", ");
                 index++;
             }
-            Front = nodes.Get(0);
+            Front = SGLNodes.Get(0);
             return data;
         }
     }

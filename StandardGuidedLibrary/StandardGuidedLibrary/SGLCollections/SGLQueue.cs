@@ -24,10 +24,10 @@ namespace StandardGuidedLibrary.SGLCollections
         public void Enqueue(T data)
         {
             SGLNode<T> SGLNode = new SGLNode<T>(data);
-            if (Front == null)
+            if (Front == null || Back == null)
             {
                 Front = SGLNode;
-                Front.SetNext(Back);
+                //Front.SetNext(Back);
                 Back = SGLNode;
             }
             else
@@ -42,7 +42,7 @@ namespace StandardGuidedLibrary.SGLCollections
         /// </summary>
         public T Dequeue()
         {
-            if (Front == null)
+            if (Front == null || Back == null)
             {
                 return default(T);
             }

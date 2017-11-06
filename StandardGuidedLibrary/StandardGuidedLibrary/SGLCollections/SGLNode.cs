@@ -12,7 +12,7 @@ namespace StandardGuidedLibrary.SGLCollections
         private T Data;
         private SGLNode<T> Next;
         private SGLNode<T> Previous;
-        public SGLArrayList<SGLEdge<T>> AdjacencyList;
+        private SGLArrayList<SGLEdge<T>> AdjacencyList;
 
         /// <summary>
         /// Default constructor for SGLNode.
@@ -75,6 +75,15 @@ namespace StandardGuidedLibrary.SGLCollections
             AdjacencyList.Add(edge);
         }
         /// <summary>
+        /// Adds an SGLNode to the list of associated SGLNodes using a direction.
+        /// </summary>
+        /// <param name="SGLNode"></param>
+        public void AddNode(SGLNode<T> SGLNode, bool isDirected)
+        {
+            SGLEdge<T> edge = new SGLEdge<T>(this, SGLNode, isDirected);
+            AdjacencyList.Add(edge);
+        }
+        /// <summary>
         /// Deletes an SGLNode with the reference to the given SGLNode.
         /// Returns true if and only if a SGLNode of the same reference is deleted.
         /// </summary>
@@ -91,6 +100,11 @@ namespace StandardGuidedLibrary.SGLCollections
             }
             return false;
         }
+        /// <summary>
+        /// Returns the list of edges connected to this node.
+        /// </summary>
+        /// <returns></returns>
+        public SGLArrayList<SGLEdge<T>> GetAdjacencyList() { return AdjacencyList; }
         /// <summary>
         /// Deletes an SGLNode at the given index.
         /// </summary>
@@ -149,7 +163,7 @@ namespace StandardGuidedLibrary.SGLCollections
         /// the current SGLNode.
         /// </summary>
         /// <returns></returns>
-        public string ListToString()
+        public string AdjacentsToString()
         {
             return AdjacencyList.ToString();
         }

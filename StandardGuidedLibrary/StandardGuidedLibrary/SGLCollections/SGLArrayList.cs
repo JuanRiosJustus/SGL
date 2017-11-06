@@ -16,7 +16,7 @@ namespace StandardGuidedLibrary.SGLCollections
         /// </summary>
         public SGLArrayList()
         {
-            this.Array = new T[10];
+            this.Array = new T[1];
             this.Index = 0;
         }
         /// <summary>

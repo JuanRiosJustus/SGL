@@ -8,13 +8,11 @@ namespace StandardGuidedLibrary.SGLCollections
 {
     class SGLGraph<T>
     {
-        private int SGLNodes;
         private bool Directed;
         private SGLArrayList<SGLNode<T>> Vertices;
 
         public SGLGraph()
         {
-            SGLNodes = 0;
             Directed = false;
             Vertices = new SGLArrayList<SGLNode<T>>();
         }
@@ -23,11 +21,9 @@ namespace StandardGuidedLibrary.SGLCollections
             Directed = false;
             Vertices = new SGLArrayList<SGLNode<T>>();
             Vertices.Add(SGLNode);
-            SGLNodes = 1;
         }
         public SGLGraph(bool directed)
         {
-            SGLNodes = 0;
             Directed = directed;
             Vertices = new SGLArrayList<SGLNode<T>>();
         }
@@ -36,7 +32,6 @@ namespace StandardGuidedLibrary.SGLCollections
             Directed = directed;
             Vertices = new SGLArrayList<SGLNode<T>>();
             Vertices.Add(SGLNode);
-            SGLNodes = 1;
         }
         /// <summary>
         /// Adds a vertex to the list of vertices associated with this graph.
@@ -65,11 +60,11 @@ namespace StandardGuidedLibrary.SGLCollections
 
             for (int i = 0; i < Vertices.Length(); i++)
             {
-                for (int j = 0; j < Vertices.Get(i).AdjacencyList.Length(); j++)
+                for (int j = 0; j < Vertices.Get(i).GetAdjacencyList().Length(); j++)
                 {
-                    if (Object.ReferenceEquals(Vertices.Get(i).AdjacencyList.Get(j), toDelete))
+                    if (Object.ReferenceEquals(Vertices.Get(i).GetAdjacencyList().Get(j), toDelete))
                     {
-                        Vertices.Get(i).AdjacencyList.Delete(j);
+                        Vertices.Get(i).GetAdjacencyList().Delete(j);
                     }
                 }
             }
@@ -86,10 +81,10 @@ namespace StandardGuidedLibrary.SGLCollections
         {
             if (Vertices.Contains(source) && Vertices.Contains(destination))
             {
-                Vertices.Get(source).AddNode(destination);
+                Vertices.Get(source).AddNode(destination, Directed);
                 if (Directed == false)
                 {
-                    Vertices.Get(destination).AddNode(source);
+                    Vertices.Get(destination).AddNode(source, Directed);
                 }
                 return true;
             }
@@ -98,25 +93,20 @@ namespace StandardGuidedLibrary.SGLCollections
         /// <summary>
         /// Returns true if and only i fthe graph is directed.
         /// Differs from the Adding an edge given a SGLNode in that it will
-        /// only return false if the graph is no directed.
+        /// only return false if the graph is not directed.
         /// </summary>
         /// <param name="SGLNode_index_one"></param>
         /// <param name="SGLNode_index_two"></param>
         /// <returns></returns>
         public bool AddEdge(int SGLNode_index_one, int SGLNode_index_two)
         {
-            
+            Vertices.Get(SGLNode_index_one).AddNode(Vertices.Get(SGLNode_index_two), Directed);
             if (Directed == false)
             {
-                Vertices.Get(SGLNode_index_one).AddNode(Vertices.Get(SGLNode_index_two));
-                Vertices.Get(SGLNode_index_two).AddNode(Vertices.Get(SGLNode_index_one));
+                Vertices.Get(SGLNode_index_two).AddNode(Vertices.Get(SGLNode_index_one), Directed);
                 return false;
             }
-            else
-            {
-                Vertices.Get(SGLNode_index_one).AddNode(Vertices.Get(SGLNode_index_two));
-                return true;
-            }
+            return true;
         }
         /// <summary>
         /// Given two vertices, if they contain a reference to one another
@@ -159,9 +149,9 @@ namespace StandardGuidedLibrary.SGLCollections
             Console.WriteLine(SGLNode.ToString() + " is the SGLNode");
             for (int i = 0; i < Vertices.Length(); i++)
             {
-                for (int j = 0; j < Vertices.Get(i).AdjacencyList.Length(); j++)
+                for (int j = 0; j < Vertices.Get(i).GetAdjacencyList().Length(); j++)
                 {
-                    if (Object.ReferenceEquals(Vertices.Get(i).AdjacencyList.Get(j), SGLNode))
+                    if (Object.ReferenceEquals(Vertices.Get(i).GetAdjacencyList().Get(j), SGLNode))
                     {
                         Vertices.Get(i).DeleteNode(SGLNode);
                         return true;

@@ -68,18 +68,32 @@ namespace StandardGuidedLibrary.SGLCollections
             return Weight;
         }
         /// <summary>
+        /// Change the direction of the edge.
+        /// </summary>
+        public void ChangeDirected()
+        {
+            if (Directed == true)
+            {
+                Directed = false;
+            }
+            else
+            {
+                Directed = true;
+            }
+        }
+        /// <summary>
         /// Returns the string representation of this SGLEdge.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            if (Directed == true)
+            if (Directed == false)
             {
-                return StartingSGLNode.ToString() + " ---> " + (EndingSGLNode == null ? "null" : EndingSGLNode.ToString());
+                return StartingSGLNode.ToString() + " <---> " + (EndingSGLNode == null ? "null" : EndingSGLNode.ToString());
             }
             else
             {
-                return StartingSGLNode.ToString() + " <---> " + (EndingSGLNode == null ? "null" : EndingSGLNode.ToString());
+                return StartingSGLNode.ToString() + " ---> " + (EndingSGLNode == null ? "null" : EndingSGLNode.ToString());
             }
         }
     }

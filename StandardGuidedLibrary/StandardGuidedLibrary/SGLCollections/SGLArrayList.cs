@@ -204,6 +204,22 @@ namespace StandardGuidedLibrary.SGLCollections
                 return false;
             }
         }
+        // TODO trim method on raw size.
+        /// <summary>
+        /// Method that return a soft copy of given SGLArrayList
+        /// Where the new list will share the references of old values with 
+        /// given lists copys.
+        /// </summary>
+        /// <returns></returns>
+        public SGLArrayList<T> SoftCopy()
+        {
+            SGLArrayList<T> newCopy = new SGLArrayList<T>();
+            for (int index = 0; index < this.Length(); index++)
+            {
+                newCopy.Add(this.Get(index));
+            }
+            return newCopy;
+        }
         /// <summary>
         /// Returns a string representation of the collection.
         /// </summary>
